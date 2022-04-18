@@ -14,6 +14,7 @@ import { ExpenseTrackerContext } from "../../../context/context";
 import {v4 as uuidv4} from 'uuid';
 
 import useStyles from "./FormStyles";
+import {incomeCategories, expenseCategories} from "../../../constants/constants";
 
 const initialState = {
   amount: "",
@@ -24,15 +25,16 @@ const initialState = {
 
 const Form = () => {
   const classes = useStyles();
-  const [ formData, setFormData ] = useState( initialState );
-  const { addTransaction } = useContext( ExpenseTrackerContext );
-  
-  const createTransaction = () =>
-  {
-    const transaction = { ...formData, amount: +formData.amount, id: uuidv4() };
-    addTransaction( transaction )
-    setFormData( initialState );
-  }
+  const [formData, setFormData] = useState(initialState);
+  const {addTransaction} = useContext(ExpenseTrackerContext);
+
+  const createTransaction = () => {
+    const transaction = {...formData, amount: +formData.amount, id: uuidv4()};
+    addTransaction(transaction);
+    setFormData(initialState);
+  };
+
+  const selectedCategories = formData.type === "Income" ? incomeCategories : expenseCategories;
   return (
     <div>
       <Grid container spacing={2}>
@@ -44,7 +46,14 @@ const Form = () => {
         <Grid item xs={6}>
           <FormControl fullWidth>
             <InputLabel>Type</InputLabel>
-            <Select value={formData.type} onChange={(e)=>setFormData(prevState=>({...prevState,type:e.target.value}))} >
+            <Select
+              value={formData.type}
+              onChange={(e) =>
+                setFormData((prevState) => ({
+                  ...prevState,
+                  type: e.target.value,
+                }))
+              }>
               <MenuItem value='Income'>Income</MenuItem>
               <MenuItem value='Expense'>Expense</MenuItem>
             </Select>
@@ -53,17 +62,44 @@ const Form = () => {
         <Grid item xs={6}>
           <FormControl fullWidth>
             <InputLabel>Category</InputLabel>
-            <Select value={formData.category} onChange={(e)=>setFormData(prevState=>({...prevState,category:e.target.value}))}>
-              <MenuItem value='business'>Business</MenuItem>
-              <MenuItem value='salary'>Salary</MenuItem>
+            <Select
+              value={formData.category}
+              onChange={(e) =>
+                setFormData((prevState) => ({
+                  ...prevState,
+                  category: e.target.value,
+                }))
+              }>
+              {selectedCategories.map((category) => (
+                <MenuItem key={category.type} value={category.type}>
+                  {category.type}
+                </MenuItem>
+              ))}
             </Select>
           </FormControl>
         </Grid>
         <Grid item xs={6}>
-          <TextField type='number' label='Amount' fullWidth value={formData.amount} onChange={(e)=>setFormData(prevState=>({...prevState,amount:e.target.value}))} ></TextField>
+          <TextField
+            type='number'
+            label='Amount'
+            fullWidth
+            value={formData.amount}
+            onChange={(e) =>
+              setFormData((prevState) => ({
+                ...prevState,
+                amount: e.target.value,
+              }))
+            }></TextField>
         </Grid>
         <Grid item xs={6}>
-          <TextField type='date' label='Date' fullWidth value={formData.date} onChange={(e)=>setFormData(prevState=>({...prevState,date:e.target.value}))}></TextField>
+          <TextField
+            type='date'
+            label='Date'
+            fullWidth
+            value={formData.date}
+            onChange={(e) =>
+              setFormData((prevState) => ({...prevState, date: e.target.value}))
+            }></TextField>
         </Grid>
         <Button
           className={classes.button}
@@ -72,7 +108,7 @@ const Form = () => {
           fullWidth
           onClick={createTransaction}>
           Create
-        </Button > 
+        </Button>
       </Grid>
     </div>
   );

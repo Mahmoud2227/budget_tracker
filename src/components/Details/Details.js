@@ -1,8 +1,10 @@
 import {Card , CardContent , Typography , CardHeader} from '@material-ui/core';
-import {Chart} from "chart.js/auto";
+import { Chart, registerables } from 'chart.js';
 import {Doughnut} from "react-chartjs-2";
 import useStyles from "./DetailsStyles";
 import useTransactions from "../../hooks/use-transactions";
+
+Chart.register( ...registerables );
 
 const Details = ({title}) => {
   const classes = useStyles();

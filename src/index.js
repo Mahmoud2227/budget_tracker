@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import {SpeechProvider} from "@speechly/react-client";
 
 import App from './App';
 import {Provider} from "./context/context";
@@ -7,9 +8,11 @@ import {Provider} from "./context/context";
 import "./index.css";
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
+  <SpeechProvider appId='d761b35f-6da6-49ce-bc72-ffb2328c3ecb' >
     <Provider>
       <App />
     </Provider>
+  </SpeechProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function

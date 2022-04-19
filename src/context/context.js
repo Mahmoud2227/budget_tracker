@@ -1,4 +1,4 @@
-import {useReducer, createContext} from "react";
+import {useReducer, createContext,useCallback} from "react";
 
 import contextReducer from "./contextReducer";
 
@@ -15,8 +15,8 @@ export const Provider = ({children}) => {
   const deleteTransaction = (id) =>
     dispatchTransactions({type: "DELETE_TRANSACTION", id});
 
-  const addTransaction = (transaction) =>
-    dispatchTransactions({type: "ADD_TRANSACTION", item: transaction});
+  const addTransaction = useCallback((transaction) =>
+    dispatchTransactions({type: "ADD_TRANSACTION", item: transaction}),[]);
   return (
     <ExpenseTrackerContext.Provider value={{
       addTransaction,

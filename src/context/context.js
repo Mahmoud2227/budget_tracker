@@ -2,7 +2,8 @@ import {useReducer, createContext,useCallback} from "react";
 
 import contextReducer from "./contextReducer";
 
-const initialState = [];
+const initialState = JSON.parse(window.localStorage.transactions) || [];
+;
 
 export const ExpenseTrackerContext = createContext(initialState);
 

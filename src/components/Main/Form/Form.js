@@ -16,11 +16,13 @@ import {v4 as uuidv4} from 'uuid';
 import useStyles from "./FormStyles";
 import {incomeCategories, expenseCategories} from "../../../constants/constants";
 
+import formatDate from "../../../utils/formatDate";
+
 const initialState = {
   amount: "",
   category: "",
   type: "Income",
-  date: new Date(),
+  date: formatDate(new Date()),
 };
 
 const Form = () => {
@@ -98,7 +100,7 @@ const Form = () => {
             fullWidth
             value={formData.date}
             onChange={(e) =>
-              setFormData((prevState) => ({...prevState, date: e.target.value}))
+              setFormData((prevState) => ({...prevState, date: formatDate(e.target.value)}))
             }></TextField>
         </Grid>
         <Button

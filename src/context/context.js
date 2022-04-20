@@ -17,12 +17,16 @@ export const Provider = ({children}) => {
     dispatchTransactions({type: "DELETE_TRANSACTION", id});
 
   const addTransaction = useCallback((transaction) =>
-    dispatchTransactions({type: "ADD_TRANSACTION", item: transaction}),[]);
+    dispatchTransactions( { type: "ADD_TRANSACTION", item: transaction } ), [] );
+  
+  const balance = transactions.reduce( ( acc, curr ) => curr.type === 'Income' ? acc + curr.amount : acc - curr.amount, 0 );
+  
   return (
     <ExpenseTrackerContext.Provider value={{
       addTransaction,
       deleteTransaction,
       transactions,
+      balance
     }} >
       {children}
     </ExpenseTrackerContext.Provider>

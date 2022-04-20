@@ -34,22 +34,22 @@ function App() {
         justifyContent='center'
         style={{height: "100vh"}}>
         <Grid item xs={12} sm={4} className={classes.mobile}>
-          <Details title='Income' />
+          <Details title="Income" />
         </Grid>
         <Grid ref={main} item xs={12} sm={3} className={classes.main}>
           <Main />
         </Grid>
         <Grid item xs={12} sm={4} className={classes.desktop}>
-          <Details title='Expense' />
+          <Details title="Income" />
         </Grid>
         <Grid item xs={12} sm={4} className={classes.last}>
-          <Details title='Income' />
+          <Details title="Expense" />
         </Grid>
-      </Grid>
       <PushToTalkButtonContainer>
         <PushToTalkButton />
         <ErrorPanel />
-      </PushToTalkButtonContainer>
+        </PushToTalkButtonContainer>
+        </Grid>
     </>
   );
 }

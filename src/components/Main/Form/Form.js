@@ -19,6 +19,7 @@ import useStyles from "./FormStyles";
 import {incomeCategories, expenseCategories} from "../../../constants/constants";
 
 import formatDate from "../../../utils/formatDate";
+import SnackBar from "../../SnackBar/SnackBar";
 
 const initialState = {
   amount: "",
@@ -31,11 +32,15 @@ const Form = () => {
   const classes = useStyles();
   const [formData, setFormData] = useState(initialState);
   const {addTransaction} = useContext(ExpenseTrackerContext);
-  const {segment} = useSpeechContext();
+  const { segment } = useSpeechContext();
+  const [open, setOpen] = useState(false);
 
   const createTransaction = useCallback(() => {
-    if (Number.isNaN(+formData.amount) && !formData.date.includes("-")) return;
-    const transaction = {...formData, amount: +formData.amount, id: uuidv4()};
+    if ( Number.isNaN( +formData.amount ) && !formData.date.includes( "-" ) ) return;
+    
+    const transaction = { ...formData, amount: +formData.amount, id: uuidv4() };
+    
+    setOpen(true)
     addTransaction(transaction);
     setFormData(initialState);
   }, [addTransaction, formData]);
@@ -82,7 +87,8 @@ const Form = () => {
   const selectedCategories = formData.type === "Income" ? incomeCategories : expenseCategories;
   return (
     <div>
-      <Grid container spacing={2}>
+      <Grid container spacing={ 2 }>
+        <SnackBar open={open} setOpen={setOpen} />
         <Grid item xs={12}>
           <Typography align='center' variant='subtitle2' gutterBottom>
             {segment && segment.words.map((word) => word.value).join(" ")}

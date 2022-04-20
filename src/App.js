@@ -1,32 +1,54 @@
-import { Grid } from "@material-ui/core";
+import {useEffect, useRef} from "react";
 
-import {PushToTalkButton,PushToTalkButtonContainer,ErrorPanel} from '@speechly/react-ui'
+import {Grid} from "@material-ui/core";
+
+import {PushToTalkButton, PushToTalkButtonContainer, ErrorPanel} from "@speechly/react-ui";
+import  {useSpeechContext} from "@speechly/react-client";
+
 
 import Details from "./components/Details/Details";
 import Main from "./components/Main/Main";
 
-import useStyles from './AppStyles';
+import useStyles from "./AppStyles";
 
-function App ()
-{
+function App() {
   const classes = useStyles();
+  const {clientState} = useSpeechContext();
+  const main = useRef();
+
+  const executeScroll = () => main.current.scrollIntoView();
+
+  useEffect(() => {
+    if (clientState === 12) {
+      executeScroll();
+    }
+  }, [clientState]);
 
   return (
     <>
-      <Grid className={classes.grid} container spacing={0} alignItems='center' justifyContent="center" style={{height:'100vh'}}>
-        <Grid item xs={12} sm={4}>
+      <Grid
+        className={classes.grid}
+        container
+        spacing={0}
+        alignItems='center'
+        justifyContent='center'
+        style={{height: "100vh"}}>
+        <Grid item xs={12} sm={4} className={classes.mobile}>
           <Details title='Income' />
         </Grid>
-        <Grid item xs={12} sm={3}>
-          <Main/>
+        <Grid ref={main} item xs={12} sm={3} className={classes.main}>
+          <Main />
         </Grid>
-        <Grid item xs={12} sm={4}>
+        <Grid item xs={12} sm={4} className={classes.desktop}>
           <Details title='Expense' />
         </Grid>
+        <Grid item xs={12} sm={4} className={classes.last}>
+          <Details title='Income' />
+        </Grid>
       </Grid>
-      <PushToTalkButtonContainer >
-        <PushToTalkButton/>
-        <ErrorPanel/>
+      <PushToTalkButtonContainer>
+        <PushToTalkButton />
+        <ErrorPanel />
       </PushToTalkButtonContainer>
     </>
   );

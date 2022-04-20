@@ -11,6 +11,7 @@ import {
 import useStyles from "./MainStyles";
 import Form from "./Form/Form";
 import List from "./List/List";
+import InfoCard from "../InfoCard";
 
 import { ExpenseTrackerContext } from "../../context/context";
 
@@ -26,10 +27,10 @@ function Main() {
         </Typography>
         <Typography
           variant='subtitle1'
-          style={{lineHeight: "1.5em", marginTop: "20px"}}>
-          Try saying Add income for 100$ in Category Salary for Monday...
+          style={ { lineHeight: "1.5em", marginTop: "20px" } }>
+          <InfoCard />
         </Typography>
-        <Divider />
+        <Divider className={classes.divider} />
         {<Form />}
       </CardContent>
       <CardContent className={classes.cardContent}>

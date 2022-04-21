@@ -28,7 +28,8 @@ const initialState = {
   date: formatDate(new Date()),
 };
 
-const Form = () => {
+const Form = () =>
+{
   const classes = useStyles();
   const [formData, setFormData] = useState(initialState);
   const {addTransaction} = useContext(ExpenseTrackerContext);

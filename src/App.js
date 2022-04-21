@@ -11,7 +11,11 @@ import Main from "./components/Main/Main";
 
 import useStyles from "./AppStyles";
 
-function App() {
+function App ()
+{
+  const connection = navigator.onLine
+  console.log(connection)
+
   const classes = useStyles();
   const {clientState} = useSpeechContext();
   const main = useRef();
@@ -45,10 +49,10 @@ function App() {
         <Grid item xs={12} sm={4} className={classes.last}>
           <Details title="Expense" />
         </Grid>
-      <PushToTalkButtonContainer>
-        <PushToTalkButton />
-        <ErrorPanel />
-        </PushToTalkButtonContainer>
+        { connection && <PushToTalkButtonContainer>
+          <PushToTalkButton />
+          <ErrorPanel />
+        </PushToTalkButtonContainer> }
         </Grid>
     </>
   );
